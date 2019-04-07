@@ -1,0 +1,13 @@
+<nz-card>
+  <nz-skeleton [nzActive]="true" [nzLoading]="isLoading" [nzAvatar]="{ size: 'medium' }">
+    <nz-card-meta
+      [nzAvatar]="avatarTemplate"
+      nzTitle="{{user.username | titlecase}}"
+      nzDescription="{{user.biography}}"
+    ></nz-card-meta>
+  </nz-skeleton>
+</nz-card>
+
+<ng-template #avatarTemplate>
+  <nz-avatar nzSrc="{{user.picture}}"></nz-avatar>
+</ng-template>

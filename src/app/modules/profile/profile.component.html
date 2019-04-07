@@ -1,0 +1,13 @@
+<div>
+  <div *ngIf="user" nz-row>
+    <div nz-col nzMd="12">
+      <app-basic-profile [user]="user" class="db-component"></app-basic-profile>
+      <app-profile-details [user]="user" class="db-component"></app-profile-details>
+    </div>
+    <div nz-col nzMd="12">
+      <app-profile-followers [user]="user" class="db-component"></app-profile-followers>
+      <app-profile-following [user]="user" class="db-component"></app-profile-following>
+      <app-profile-kweets [kweets]="user.postedKweets" class="db-component"></app-profile-kweets>
+    </div>
+  </div>
+</div>

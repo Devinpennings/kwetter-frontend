@@ -1,0 +1,12 @@
+<nz-card nzTitle="Following">
+  <nz-list [nzDataSource]="user.following" [nzRenderItem]="item" [nzGrid]="{ gutter: 16, span: 6 }">
+    <ng-template #item let-item>
+      <nz-list-item [nzContent]="nzContent">
+        <ng-template #nzContent>
+          {{item.username}}
+        </ng-template>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+</nz-card>
+
