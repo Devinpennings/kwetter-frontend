@@ -1,0 +1,16 @@
+<nz-card nzTitle="What's happening?">
+  <form nz-form [formGroup]="form" class="register-form" (ngSubmit)="post()">
+    <nz-form-item class="form-item">
+      <nz-form-control>
+        <nz-input-group>
+          <textarea nz-input rows="2" formControlName="message" placeholder="Lekker BBQ'en."></textarea>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="form-item">
+      <nz-form-control>
+        <button nz-button class="post-button" [nzLoading]="isLoading" [disabled]="!form.valid" [nzType]="'primary'">Post</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

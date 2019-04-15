@@ -3,7 +3,7 @@
     <ng-template #item let-item>
       <nz-list-item [nzContent]="nzContent">
         <ng-template #nzContent>
-          {{item.username}}
+          <a [routerLink]="['/profile/' + item.id]">{{item.username}}</a>
         </ng-template>
       </nz-list-item>
     </ng-template>

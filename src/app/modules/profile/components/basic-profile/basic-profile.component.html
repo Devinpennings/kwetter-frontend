@@ -1,5 +1,8 @@
-<nz-card>
-  <nz-skeleton [nzActive]="true" [nzLoading]="isLoading" [nzAvatar]="{ size: 'medium' }">
+<nz-card [nzActions]="[actionFollow]">
+  <nz-skeleton
+    [nzActive]="true"
+    [nzLoading]="isLoading"
+    [nzAvatar]="{ size: 'medium' }">
     <nz-card-meta
       [nzAvatar]="avatarTemplate"
       nzTitle="{{user.username | titlecase}}"
@@ -8,6 +11,29 @@
   </nz-skeleton>
 </nz-card>
 
+<ng-template #actionFollow>
+  <div *ngIf="isSelf; else isNotSelf" (click)="logout()">
+    <i nz-icon type="logout"></i> Logout
+  </div>
+
+  <ng-template #isNotSelf>
+    <div *ngIf="isSubmittingFollowing; else isNotSubmitting">
+      <i nz-icon type="loading"></i>
+    </div>
+
+    <ng-template #isNotSubmitting>
+      <div (click)="toggleFollow()">
+        <i nz-icon type="stop" *ngIf="isFollowing(); else notFollowing"></i>
+      </div>
+
+      <ng-template #notFollowing>
+        <i nz-icon type="plus"></i>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+</ng-template>
+
 <ng-template #avatarTemplate>
   <nz-avatar nzSrc="{{user.picture}}"></nz-avatar>
 </ng-template>
+

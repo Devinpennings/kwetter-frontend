@@ -1,0 +1,39 @@
+<ul nz-menu [nzMode]="'horizontal'">
+  <li [routerLink]="['/dashboard']" nz-menu-item [nzSelected]="isSelected('/dashboard')">
+    <i nz-icon type="home"></i> Dashboard
+  </li>
+  <li [routerLink]="['/profile']" nz-menu-item [nzSelected]="isSelected('/profile')">
+      <i nz-icon type="user"></i> Profile
+  </li>
+  <li nz-menu-item></li>
+  <nz-input-group class="searchbox" [nzSuffix]="suffixIconSearch">
+    <input
+      type="text"
+      nz-input placeholder="Search users or kweets"
+      [(ngModel)]="inputValue"
+      (input)="onInput($event.target?.value)"
+      [nzAutocomplete]="auto"/>
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon type="search"></i>
+  </ng-template>
+</ul>
+
+<nz-autocomplete #auto>
+  <nz-auto-optgroup *ngIf="options.users" [nzLabel]="groupTitle">
+    <ng-template #groupTitle>
+      <span>Users</span>
+    </ng-template>
+    <nz-auto-option [routerLink]="['/profile/', user.id]" *ngFor="let user of options.users.children" [nzLabel]="user.username" [nzValue]="user">
+      <nz-avatar class="user-image" [nzSize]="small" nzSrc="{{user.picture}}"></nz-avatar> {{ user.username | titlecase }}
+    </nz-auto-option>
+  </nz-auto-optgroup>
+  <nz-auto-optgroup *ngIf="options.kweets" [nzLabel]="groupTitle">
+    <ng-template #groupTitle>
+      <span>Kweets</span>
+    </ng-template>
+    <nz-auto-option [routerLink]="['/kweet/', kweet.id]" *ngFor="let kweet of options.kweets.children" [nzLabel]="kweet.author.username" [nzValue]="kweet">
+      <nz-avatar class="user-image" [nzSize]="small" nzSrc="{{kweet.author.picture}}"></nz-avatar> {{ kweet.message }}
+    </nz-auto-option>
+  </nz-auto-optgroup>
+</nz-autocomplete>

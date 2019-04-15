@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Kweet} from '../../../../shared/models/kweet';
+import {User} from '../../../../shared/models/user';
+import {KweetService} from '../../../../shared/services/kweet.service';
 
 @Component({
   selector: 'app-profile-kweets',
@@ -8,11 +10,17 @@ import {Kweet} from '../../../../shared/models/kweet';
 })
 export class ProfileKweetsComponent implements OnInit {
 
-  @Input() kweets: Kweet[];
+  @Input() user: User;
+  kweets: Kweet[];
 
-  constructor() { }
+  constructor(
+    private kweetService: KweetService
+  ) { }
 
   ngOnInit() {
+    this.kweetService.getByUser(this.user.id).subscribe(result => {
+      this.kweets = result;
+    });
   }
 
 }

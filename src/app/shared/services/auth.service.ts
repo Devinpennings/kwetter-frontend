@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {User} from '../models/user';
 import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -11,11 +11,15 @@ import {AuthInfo} from '../models/authInfo';
 })
 export class AuthService {
 
-  private apiUrl = 'http://192.168.178.24:8080/kwetter-1.0/api/auth';
+  private user: User;
+  private userSubject: Subject<User>;
+  private apiUrl = 'http://192.168.178.157:8080/kwetter-1.0/api/auth';
 
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+  ) {
+    this.userSubject = new Subject();
+  }
 
   login(username: string, password: string): Observable<User> {
     const url = `${this.apiUrl}?username=${username}&password=${password}`;
@@ -24,6 +28,7 @@ export class AuthService {
         map(result => {
           const headers = result.headers;
           this.setSession(headers.get('Authorization'));
+          this.setUser(result.body);
           return result.body;
         })
       );
@@ -32,6 +37,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('authorization_token');
+    localStorage.removeItem('user');
   }
 
   isLoggedIn(): boolean {
@@ -41,6 +47,18 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  getUser(): User {
+    if (this.user === undefined) {
+      this.setUser(JSON.parse(localStorage.getItem('user')));
+    }
+
+    return this.user;
+  }
+
+  getUserAsObservable(): Observable<User> {
+    return this.userSubject.asObservable();
   }
 
   getInfo(): AuthInfo {
@@ -54,6 +72,12 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('authorization_token');
+  }
+
+  private setUser(user: User) {
+    this.userSubject.next(user);
+    this.user = user;
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   private setSession(token) {

@@ -11,12 +11,14 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import {AuthInterceptor} from './shared/interceptors/AuthInterceptor';
 import {ErrorInterceptor} from './shared/interceptors/ErrorInterceptor';
+import {NavbarComponent} from './components/navbar/navbar.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

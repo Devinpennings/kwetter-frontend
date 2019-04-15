@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from '@angular/common';
 import {User} from '../../shared/models/user';
 import {UserService} from '../../shared/services/user.service';
@@ -17,19 +17,29 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private userService: UserService,
     private authService: AuthService
-  ) {}
+  ) {
+    route.params.subscribe(() => {
+      this.fetchUser();
+    });
+  }
 
   ngOnInit() {
-    this.fetchUser();
   }
 
   fetchUser(): void {
+    this.isLoading = true;
     let id = this.route.snapshot.paramMap.get('id');
+
     if (id == null) {
       id = this.authService.getInfo().sub;
+    }
+
+    if (id == null) {
+      this.router.navigate(['/']);
     }
 
     this.userService.get(id)
