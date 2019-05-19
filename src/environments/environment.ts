@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/kwetter-1.0/api'
-
+  wsUrl: 'ws://192.168.178.157:8080/kwetter-1.0/',
+  apiUrl: 'http://192.168.178.157:8080/kwetter-1.0/api'
 };
 
 /*

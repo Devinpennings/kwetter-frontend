@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import * as JWT from 'jwt-decode';
 import {AuthInfo} from '../models/authInfo';
 import {environment} from "../../../environments/environment";
+import {SocketService} from './socket.service';
 
 @Injectable({
   providedIn: 'root'
