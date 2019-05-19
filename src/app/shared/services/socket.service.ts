@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer, Subject} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,22 @@ export class SocketService {
 
   private subject: Observable<MessageEvent>;
   private ws: any;
+
+  constructor(
+    private authService: AuthService
+  ) {
+    if (this.authService.getUser() != null) {
+      this.connect(this.authService.getUser().id);
+    }
+
+    this.authService.getUserAsObservable().subscribe(user => {
+      if (user) {
+        this.connect(user.id);
+      } else {
+        this.close();
+      }
+    });
+  }
 
   public get(): Observable<MessageEvent> {
     return this.subject;

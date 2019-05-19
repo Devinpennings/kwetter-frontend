@@ -30,6 +30,7 @@ export class KweetService {
       if (kweet.author.id === authService.getUser().id) {
         this.notificationService.success('Kweet placed!', 'You placed a new kweet!');
       } else {
+        this.updatedTimeline.emit();
         this.notificationService.info('New kweet!', kweet.author.username + ' placed a new kweet!');
       }
 
