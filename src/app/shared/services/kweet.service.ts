@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {Kweet} from '../models/kweet';
 import {map} from 'rxjs/operators';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,14 @@ import {map} from 'rxjs/operators';
 export class KweetService {
 
   @Output() updatedTimeline: EventEmitter<boolean> = new EventEmitter();
-  private apiUrl = 'http://192.168.178.157:8080/kwetter-1.0/api/kweets';
+  private apiUrl = '/kweets';
 
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) { }
+  ) {
+    this.apiUrl = environment.apiUrl + this.apiUrl;
+  }
 
   create(message: string): Observable<Kweet> {
     const url = `${this.apiUrl}?userId=${this.authService.getUser().id}`;

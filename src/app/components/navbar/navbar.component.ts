@@ -25,7 +25,6 @@ export class NavbarComponent implements OnInit {
     if (value.length < 3) { return; }
 
     this.searchService.search(value).subscribe(result => {
-      console.log(result);
       this.options = result;
     });
   }

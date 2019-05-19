@@ -4,17 +4,20 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../models/user';
 import {map} from 'rxjs/operators';
 import {Kweet} from '../models/kweet';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  private apiUrl = 'http://192.168.178.157:8080/kwetter-1.0/api/search';
+  private apiUrl = '/search';
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    this.apiUrl = environment.apiUrl + this.apiUrl;
+  }
 
   search(term: string): Observable<any> {
     const url = `${this.apiUrl}/${term}`;

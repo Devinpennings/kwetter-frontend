@@ -4,18 +4,21 @@ import {User} from '../models/user';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {map} from 'rxjs/operators';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private apiUrl = 'http://192.168.178.157:8080/kwetter-1.0/api/users';
+  private apiUrl = '/users';
 
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) { }
+  ) {
+    this.apiUrl = environment.apiUrl + this.apiUrl;
+  }
 
   get(id: string): Observable<User> {
     const url = `${this.apiUrl}/${id}`;

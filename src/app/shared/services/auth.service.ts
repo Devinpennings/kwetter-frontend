@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import * as JWT from 'jwt-decode';
 import {AuthInfo} from '../models/authInfo';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,13 @@ export class AuthService {
 
   private user: User;
   private userSubject: Subject<User>;
-  private apiUrl = 'http://192.168.178.157:8080/kwetter-1.0/api/auth';
+  private apiUrl = '/auth';
 
   constructor(
     private http: HttpClient,
   ) {
     this.userSubject = new Subject();
+    this.apiUrl = environment.apiUrl + this.apiUrl;
   }
 
   login(username: string, password: string): Observable<User> {
